@@ -36,8 +36,14 @@ namespace notes_api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromForm] Item item)
+        public IActionResult Create([FromBody] Item item)
         {
+            Console.WriteLine(Request.Body);
+            Console.WriteLine(Request.Headers);
+            Console.WriteLine(Request.ContentType);
+            Console.WriteLine(item);
+            Console.WriteLine(item.Label);
+            Console.WriteLine(item.Description);
             if (item == null)
                 return BadRequest();
 
@@ -47,7 +53,7 @@ namespace notes_api.Controllers
         }
         
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromForm] Item item)
+        public IActionResult Update(int id, [FromBody] Item item)
         {
             if (item == null || item.Id != id)
                 return BadRequest();
