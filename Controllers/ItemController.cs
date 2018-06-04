@@ -38,12 +38,6 @@ namespace notes_api.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Item item)
         {
-            Console.WriteLine(Request.Body);
-            Console.WriteLine(Request.Headers);
-            Console.WriteLine(Request.ContentType);
-            Console.WriteLine(item);
-            Console.WriteLine(item.Label);
-            Console.WriteLine(item.Description);
             if (item == null)
                 return BadRequest();
 
