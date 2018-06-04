@@ -27,6 +27,18 @@ namespace notes_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CORSPolicy",
+                builder =>
+                {
+                    builder.WithOrigins(Configuration["AllowedCORSOrigin"]);
+                    builder.AllowAnyMethod();
+                    builder.AllowCredentials();
+                    builder.AllowAnyHeader();
+                });
+            });
+
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -46,6 +58,7 @@ namespace notes_api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("CORSPolicy");
             app.UseMvc();
         }
     }
