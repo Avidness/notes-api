@@ -43,7 +43,7 @@ namespace notes_api.Controllers
 
             item.CreatedAt = DateTime.UtcNow;
             _items.Create(item);
-            return new ObjectResult(item.Id);
+            return new ObjectResult(item);
         }
         
         [HttpPut("{id}")]
