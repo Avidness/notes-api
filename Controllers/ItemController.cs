@@ -53,7 +53,7 @@ namespace notes_api.Controllers
                 return BadRequest();
 
             _items.Update(item);
-            return new NoContentResult();
+            return new ObjectResult(item);
         }
 
         [HttpDelete("{id}")]
