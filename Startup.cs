@@ -46,6 +46,7 @@ namespace notes_api
             });
             
             services.AddSingleton<ItemRepository, ItemRepository>();
+            services.AddSingleton<CategoryRepository, CategoryRepository>();
             services.AddDbContext<MainContext>(options => 
                 options.UseSqlServer(Configuration["DefaultConnection"]));
         }
