@@ -7,7 +7,7 @@ using notes_api.DAL.EFCore;
 
 namespace notes_api.DAL.Repositories
 {
-    public class ItemRepository : IItemRepository
+    public class ItemRepository : IRepository<Item>
     {
         private readonly MainContext _db;
 
@@ -27,7 +27,7 @@ namespace notes_api.DAL.Repositories
         public void Update(Item item)
         {
             item.LastModifiedAt = DateTime.UtcNow;
-
+            
             // TODO: use DTO's and automapping
             var existing_item = _db.Items.Find(item.Id);
             existing_item.Label = item.Label;

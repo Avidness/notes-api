@@ -11,9 +11,9 @@ namespace notes_api.Controllers
     [Route("api/[controller]")]
     public class ItemController : Controller
     {
-        public IItemRepository _items;
+        public ItemRepository _items;
 
-        public ItemController(IItemRepository items)
+        public ItemController(ItemRepository items)
         {
             _items = items;
         }
