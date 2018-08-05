@@ -24,6 +24,13 @@ namespace notes_api.Controllers
             return _items.GetAll();
         }
 
+        [HttpGet]
+        [Route("/api/item/category/{category_id}")]
+        public Task<IEnumerable<Item>> GetByCategory(int category_id)
+        {
+            return _items.GetByCategory(category_id);
+        }
+
         [HttpGet("{id}", Name = "GetItems")]
         public IActionResult GetById(int id)
         {
