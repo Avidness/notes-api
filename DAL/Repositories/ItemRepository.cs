@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -40,6 +41,14 @@ namespace notes_api.DAL.Repositories
         public async Task<IEnumerable<Item>> GetAll()
         {
             return await _db.Items
+              .Include(x => x.Category)
+              .ToListAsync();
+        } 
+
+        public async Task<IEnumerable<Item>> GetByCategory(int category_id)
+        {
+            return await _db.Items
+              .Where(x => x.Category.Id == category_id)
               .Include(x => x.Category)
               .ToListAsync();
         } 
