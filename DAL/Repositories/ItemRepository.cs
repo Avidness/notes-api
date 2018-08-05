@@ -39,12 +39,16 @@ namespace notes_api.DAL.Repositories
 
         public async Task<IEnumerable<Item>> GetAll()
         {
-            return await _db.Items.ToListAsync();
+            return await _db.Items
+              .Include(x => x.Category)
+              .ToListAsync();
         } 
 
         public async Task<Item> Get(int id)
         {
-            return await _db.Items.SingleAsync(d => d.Id == id);
+            return await _db.Items
+              .Include(x => x.Category)
+              .SingleAsync(d => d.Id == id);
         } 
 
         public void Delete(int id)

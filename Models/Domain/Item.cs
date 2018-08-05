@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace notes_api.Models.Domain
 {
@@ -15,5 +16,7 @@ namespace notes_api.Models.Domain
         [StringLength(1024)]
         [Display(Name = "Description")]
         public string Description { get; set; }
+        
+        public Category Category { get; set; }
     }
 }
