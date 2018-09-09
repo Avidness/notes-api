@@ -27,12 +27,16 @@ namespace notes_api.DAL.Repositories
 
         public void Update(Item item)
         {
-            item.LastModifiedAt = DateTime.UtcNow;
-            
             // TODO: use DTO's and automapping
             var existing_item = _db.Items.Find(item.Id);
             existing_item.Label = item.Label;
             existing_item.Description = item.Description;
+            existing_item.LastModifiedAt = DateTime.UtcNow;
+
+            if(existing_item.Category.Id != item.Category.Id){
+                var newCat = _db.Categories.Single(d => d.Id == item.Category.Id);
+                existing_item.Category = newCat;
+            }
 
             _db.Items.Update(existing_item);
             _db.SaveChanges();
