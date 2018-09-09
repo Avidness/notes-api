@@ -26,11 +26,11 @@ namespace notes_api.DAL.Repositories
 
         public void Update(Category category)
         {
-            var existing_category = _db.Items.Find(category.Id);
+            var existing_category = _db.Categories.Find(category.Id);
             existing_category.Label = category.Label;
             existing_category.LastModifiedAt = DateTime.UtcNow;
 
-            _db.Items.Update(existing_category);
+            _db.Categories.Update(existing_category);
             _db.SaveChanges();
         }
 
