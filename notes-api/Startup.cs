@@ -45,8 +45,8 @@ namespace notes_api
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
             
-            services.AddSingleton<ItemRepository, ItemRepository>();
-            services.AddSingleton<CategoryRepository, CategoryRepository>();
+            services.AddScoped<ItemRepository, ItemRepository>();
+            services.AddScoped<CategoryRepository, CategoryRepository>();
             services.AddDbContext<MainContext>(options => 
                 options.UseSqlServer(Configuration["DefaultConnection"]));
         }
