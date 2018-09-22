@@ -47,20 +47,48 @@ namespace notes_api
             
             services.AddScoped<ItemRepository, ItemRepository>();
             services.AddScoped<CategoryRepository, CategoryRepository>();
-            services.AddDbContext<MainContext>(options => 
-                options.UseSqlServer(Configuration["DefaultConnection"]));
+            services.AddDbContext<MainContext>(opt => opt.UseInMemoryDatabase("notes_db"));
+            //services.AddDbContext<MainContext>(options => 
+             //   options.UseSqlServer(Configuration["DefaultConnection"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, MainContext context)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            // TODO: add logging
+
+            AddTestData(context);
+
             app.UseCors("CORSPolicy");
             app.UseMvc();
         }
+
+        private static void AddTestData(MainContext context)
+        {
+          var cat1 = new Category
+          {
+              Id = 1,
+              Label = "test category 1"
+          };
+      
+          context.Categories.Add(cat1);
+      
+          var item1 = new Item
+          {
+              Id = 1,
+              Category = cat1,
+              Label = "test item 1",
+              Description = "Description 1"
+          };
+      
+          context.Items.Add(item1);
+      
+          context.SaveChanges();
+      }
     }
 }
