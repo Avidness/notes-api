@@ -10,7 +10,7 @@ namespace notes_api.Models.Domain
     public class Entity
     {
         [Key]
-        public virtual int Id { get; set; }
+        public virtual Guid Id { get; set; }
 
         [DisplayName("Created At")]
         public virtual DateTime CreatedAt { get; set; }

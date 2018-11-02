@@ -26,13 +26,13 @@ namespace notes_api.Controllers
 
         [HttpGet]
         [Route("/api/item/category/{category_id}")]
-        public Task<IEnumerable<Item>> GetByCategory(int category_id)
+        public Task<IEnumerable<Item>> GetByCategory(Guid category_id)
         {
             return _items.GetByCategory(category_id);
         }
 
         [HttpGet("{id}", Name = "GetItems")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(Guid id)
         {
             var item = _items.Get(id);
             if (item == null)
@@ -54,7 +54,7 @@ namespace notes_api.Controllers
         }
         
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Item item)
+        public IActionResult Update(Guid id, [FromBody] Item item)
         {
             if (item == null || item.Id != id)
                 return BadRequest();
@@ -64,7 +64,7 @@ namespace notes_api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             _items.Delete(id);
             return new NoContentResult();

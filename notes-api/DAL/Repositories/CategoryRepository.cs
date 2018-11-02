@@ -18,6 +18,7 @@ namespace notes_api.DAL.Repositories
         
         public async void Create(Category category)
         {
+            category.Id = Guid.NewGuid();
             category.LastModifiedAt = DateTime.UtcNow;
             category.CreatedAt = DateTime.UtcNow;
             await _db.Categories.AddAsync(category);
@@ -39,12 +40,12 @@ namespace notes_api.DAL.Repositories
             return await _db.Categories.ToListAsync();
         } 
 
-        public async Task<Category> Get(int id)
+        public async Task<Category> Get(Guid id)
         {
             return await _db.Categories.SingleAsync(d => d.Id == id);
         } 
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var category = _db.Categories.Find(id);
             _db.Categories.Remove(category);

@@ -25,7 +25,7 @@ namespace notes_api.Controllers
         }
 
         [HttpGet("{id}", Name = "GetCategories")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(Guid id)
         {
             var category = _categories.Get(id);
             if (category == null)
@@ -47,7 +47,7 @@ namespace notes_api.Controllers
         }
         
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Category category)
+        public IActionResult Update(Guid id, [FromBody] Category category)
         {
             if (category == null || category.Id != id)
                 return BadRequest();
@@ -57,7 +57,7 @@ namespace notes_api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             _categories.Delete(id);
             return new NoContentResult();

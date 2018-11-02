@@ -7,9 +7,9 @@ namespace notes_api.DAL.Repositories
     public interface IRepository<T>
     {
         Task<IEnumerable<T>> GetAll(); 
-        Task<T> Get(int id); 
+        Task<T> Get(Guid id); 
         void Create(T entity); 
-        void Delete(int id); 
+        void Delete(Guid id); 
         void Update(T entity); 
     }
 }
