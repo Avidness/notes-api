@@ -63,6 +63,7 @@ namespace notes_api.DAL.Repositories
             return await _db.Items
               .Where(x => x.Category.Id == category_id)
               .Include(x => x.Category)
+              .OrderBy(x => x.Ordering)
               .ToListAsync();
         } 
 
