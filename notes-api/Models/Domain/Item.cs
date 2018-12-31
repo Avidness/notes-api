@@ -18,5 +18,7 @@ namespace notes_api.Models.Domain
         public string Description { get; set; }
         
         public Category Category { get; set; }
+
+        public int Ordering { get; set; }
     }
 }
