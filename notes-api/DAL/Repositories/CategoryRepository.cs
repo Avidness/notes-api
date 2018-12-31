@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -37,7 +38,9 @@ namespace notes_api.DAL.Repositories
 
         public async Task<IEnumerable<Category>> GetAll()
         {
-            return await _db.Categories.ToListAsync();
+            return await _db.Categories
+              .OrderBy(x => x.CreatedAt)
+              .ToListAsync();
         } 
 
         public async Task<Category> Get(Guid id)
@@ -47,6 +50,7 @@ namespace notes_api.DAL.Repositories
 
         public void Delete(Guid id)
         {
+            // TODO: Remove orphaned items
             var category = _db.Categories.Find(id);
             _db.Categories.Remove(category);
             _db.SaveChanges();
