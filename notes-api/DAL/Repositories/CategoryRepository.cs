@@ -50,7 +50,6 @@ namespace notes_api.DAL.Repositories
 
         public void Delete(Guid id)
         {
-            // TODO: Remove orphaned items
             var category = _db.Categories.Find(id);
             _db.Categories.Remove(category);
             _db.SaveChanges();

@@ -80,5 +80,14 @@ namespace notes_api.DAL.Repositories
             _db.Items.Remove(item);
             _db.SaveChanges();
         }
+
+        public void DeleteByCategory(Guid category_id)
+        {
+            _db.Items
+              .Where(x => x.Category.Id == category_id)
+              .ToList()
+              .ForEach(x => _db.Items.Remove(x));
+            _db.SaveChanges();
+        }
     }
 }

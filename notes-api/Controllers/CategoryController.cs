@@ -12,10 +12,12 @@ namespace notes_api.Controllers
     public class CategoryController : Controller
     {
         public CategoryRepository _categories;
+        public ItemRepository _items;
 
-        public CategoryController(CategoryRepository categories)
+        public CategoryController(CategoryRepository categories, ItemRepository items)
         {
             _categories = categories;
+            _items = items;
         }
 
         [HttpGet]
@@ -59,6 +61,7 @@ namespace notes_api.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
+            _items.DeleteByCategory(id);
             _categories.Delete(id);
             return new NoContentResult();
         }
