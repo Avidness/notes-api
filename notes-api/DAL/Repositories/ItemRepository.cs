@@ -78,7 +78,16 @@ namespace notes_api.DAL.Repositories
 
         public void Delete(Guid id)
         {
-            var item = _db.Items.Find(id);
+            var item = _db.Items
+              .Include(x => x.Category)
+              .First(d => d.Id == id);
+
+            UpdateOrderRange(
+              item.Category.Id, 
+              item.Ordering, 
+              GetLastOrdering(item.Category.Id), 
+              -1);
+
             _db.Items.Remove(item);
             _db.SaveChanges();
         }
