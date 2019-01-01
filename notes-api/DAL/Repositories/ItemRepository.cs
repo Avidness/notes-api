@@ -22,10 +22,12 @@ namespace notes_api.DAL.Repositories
             item.Id = Guid.NewGuid();
             item.LastModifiedAt = DateTime.UtcNow;
             item.CreatedAt = DateTime.UtcNow;
+            item.Ordering = 0;
             
             var category = _db.Categories.Single(d => d.Id == item.Category.Id);
             item.Category = category;
             
+            UpdateOrderRange(item.Category.Id, 0, GetLastOrdering(item.Category.Id), 1);
             await _db.Items.AddAsync(item);
             _db.SaveChanges();
         }
@@ -107,6 +109,16 @@ namespace notes_api.DAL.Repositories
 
             UpdateOrderRange(category_id, low, high, increment);
             _db.SaveChanges();
+        }
+
+        private int GetLastOrdering(Guid category_id){
+            if(_db.Items.Count() == 0)
+              return 0;
+            
+            return _db.Items
+                .OrderByDescending(x => x.Ordering)
+                .First()
+                .Ordering;
         }
 
         private void UpdateOrderRange(Guid category_id, int low, int high, int increment)
