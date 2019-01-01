@@ -89,5 +89,36 @@ namespace notes_api.DAL.Repositories
               .ForEach(x => _db.Items.Remove(x));
             _db.SaveChanges();
         }
+
+        public void UpdateOrder(Guid item_id, Guid category_id, int old_index, int new_index)
+        {
+            // Update the position of the moved item
+            var item = _db.Items
+                .Where(x => x.Id == item_id)
+                .First();
+            item.Ordering = new_index;
+            _db.Items.Update(item);
+            
+            // Determine the how to shift the affected elements
+            var shift_up = (old_index > new_index);
+            var low = (shift_up ? new_index : old_index+1);
+            var high = (shift_up ? old_index-1 : new_index);
+            var increment = (shift_up ? 1 : -1);
+
+            UpdateOrderRange(category_id, low, high, increment);
+            _db.SaveChanges();
+        }
+
+        private void UpdateOrderRange(Guid category_id, int low, int high, int increment)
+        {
+            var items = _db.Items
+                .Where(x => 
+                  x.Category.Id == category_id && 
+                  x.Ordering >= low && 
+                  x.Ordering <= high
+                ).ToList();
+
+            items.ForEach(x => x.Ordering = x.Ordering + increment);
+        }
     }
 }

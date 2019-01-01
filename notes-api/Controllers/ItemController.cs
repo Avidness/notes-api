@@ -69,5 +69,12 @@ namespace notes_api.Controllers
             _items.Delete(id);
             return new NoContentResult();
         }
+
+        [HttpPut("/api/item/updateorder/{item_id}/{category_id}/{old_index}/{new_index}")]
+        public IActionResult UpdateOrder(Guid item_id, Guid category_id, int old_index, int new_index)
+        {
+            _items.UpdateOrder(item_id, category_id, old_index, new_index);
+            return Ok();
+        }
     }
 }
